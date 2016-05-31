@@ -1,14 +1,13 @@
 var express = require('express'),
-	bodyParser = require('body-parser'),
+		bodyParser = require('body-parser'),
+		config = require('./config/config.js'),
+		db = require('./config/init.js')
 
-var config = require('./config/config.js'),
-	db = require('./config/init.js');
-
-db.init();
+db();
 
 var app = express();
 
-app.use(bodyParser.urlencoded({extend: false}));
+app.use(bodyParser.urlencoded({extend: true}));
 app.use(bodyParser.json());
 
 var api  = require('./app/routes/api')(app, express);

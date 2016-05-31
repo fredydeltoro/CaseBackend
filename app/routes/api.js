@@ -1,11 +1,15 @@
 
 var User = require('../models/user');
-var config = require('../../config');
+var config = require('../../config/config');
 
 var secretKey = config.secretKey
 
 module.exports = function(app, express){
-	var api = express.Router;
+	var api = express.Router();
+
+	api.get('/', function (req, res) {
+		res.json({message : 'provando el servidor'})
+	})
 
 	//API FOR SIGNUP USER
 	api.post('/signup/', function(req,res){
@@ -15,7 +19,7 @@ module.exports = function(app, express){
 			password: req.body.password
 		});
 
-		User,save(function(err){
+		user.save(function(err){
 			if(err){
 				res.send(err);
 			}
@@ -26,15 +30,15 @@ module.exports = function(app, express){
 	//API FOR USER LOGIN
 	api.post('/login', function(req,res){
 		User.findOne({
-			username: req.query.username;
+			username: req.query.username
 		}).selet('pasword').exec(function(err,user){
-			
+
 			if(err) throw error;
-			
+
 			if(!user){
 				res.send({message:"User Does not Exist"})
 			} else if (user){
-				
+
 				var validPassword="Método";
 
 				if(!validPassword){
@@ -54,9 +58,9 @@ module.exports = function(app, express){
 		})
 	})
 
-	//MIDDLEWARE 
+	//MIDDLEWARE
 	//------------
-	//MIDDLEWARE 
+	//MIDDLEWARE
 
-	return api;	
+	return api;
 }
