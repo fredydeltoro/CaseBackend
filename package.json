@@ -9,9 +9,11 @@
   },
   "author": "Ponch Team",
   "license": "ISC",
-  "dependencies" : {
-    "body-parser"    : "^1.4.3",
-    "express"        : "^4.13.4",
-    "mongoose"       : "^4.4.12"
-  }  
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "compression": "^1.6.2",
+    "express": "^4.13.4",
+    "helmet": "^2.1.0",
+    "mongoose": "^4.4.12"
+  }
 }

@@ -12,7 +12,7 @@ module.exports = function(app, express){
 	})
 
 	//API FOR SIGNUP USER
-	api.post('/signup/', function(req,res){
+	api.post('/signup/:username', function(req,res){
 		var user = new User({
 			name: req.query.name,
 			username: req.params.username,
@@ -23,7 +23,7 @@ module.exports = function(app, express){
 			if(err){
 				res.send(err);
 			}
-			res.json({ message:'Insert Message Here'});
+			res.json({ message:'Usuario creado'});
 		});
 	})
 
@@ -59,7 +59,11 @@ module.exports = function(app, express){
 	})
 
 	//MIDDLEWARE
-	//------------
+	app.use(function (req, res, next) {
+		console.log(req.path);
+		console.log('Request Type: '+ req.method);
+		next();
+	})
 	//MIDDLEWARE
 
 	return api;
