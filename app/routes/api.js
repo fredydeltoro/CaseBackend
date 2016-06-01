@@ -1,8 +1,9 @@
 
 var User = require('../models/user');
 var config = require('../../config/config');
-
+var crypto = require('crypto')
 var secretKey = config.secretKey
+var cypher = crypto.createCipher('aes-256-cbc', secretKey)
 
 module.exports = function(app, express){
 	var api = express.Router();
@@ -13,10 +14,11 @@ module.exports = function(app, express){
 
 	//API FOR SIGNUP USER
 	api.post('/signup/:username', function(req,res){
+		cypher.update(req.body.password, 'utf-8', 'base64')
 		var user = new User({
 			name: req.query.name,
 			username: req.params.username,
-			password: req.body.password
+			password: cypher.final('base64')
 		});
 
 		user.save(function(err){
@@ -62,6 +64,7 @@ module.exports = function(app, express){
 	app.use(function (req, res, next) {
 		console.log(req.path);
 		console.log('Request Type: '+ req.method);
+		console.log(req.body.password);
 		next();
 	})
 	//MIDDLEWARE
